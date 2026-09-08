@@ -8,6 +8,7 @@ from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_community.utilities.tavily_search import TavilySearchAPIWrapper
 from langchain_groq import ChatGroq
 from langgraph.prebuilt import create_react_agent
+from langchain_core.messages import SystemMessage
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -66,7 +67,24 @@ def build_agent():
     return create_react_agent(
         model=llm,
         tools=[search_tool, get_current_weather],
+        prompt=SystemMessage(
+            content="""
+                You are a helpful assistant with access to tools.
+
+                Use the Tavily search tool whenever the user asks about:
+                - current events
+                - recent news
+                - information that may have changed
+                - events in 2025 or later
+                - anything requiring up-to-date information
+
+                Use the weather tool for current weather questions.
+
+                Do not rely on your internal knowledge for recent or time-sensitive information.
+                """
+        ),
         debug=True,
+    )
     )
 
 
