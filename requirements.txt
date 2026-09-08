@@ -1,7 +1,10 @@
+langchain_core
+python-dotenv
+streamlit
+requests
 langchain
 langchain-community
-langchain_core
-langchain-openai
-python-dotenv
-langchainhub
-streamlit
+langchain-core
+langchain-groq
+langgraph
+tavily-python
